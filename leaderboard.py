@@ -17,7 +17,7 @@ def print_standings(season):
     #takes the teams and sorts the objects by their wins in descending order
     print("Standings")
     for x in range(len(sorted_teams)):
-        win_percentage = sorted_teams[x].wins / (sorted_teams[x].wins + sorted_teams[x].losses)
+        win_percentage = f"{sorted_teams[x].wins / (sorted_teams[x].wins + sorted_teams[x].losses):.3f}"
         print(str(x + 1) + ". " + sorted_teams[x].name + "   " + str(sorted_teams[x].wins) + "-" + str(sorted_teams[x].losses) + "   " + str(win_percentage))
 
 def batter_leaderboard_derived_stats(season, stat, title):
