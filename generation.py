@@ -4,7 +4,9 @@ from faker import Faker
 
 fake = Faker()
 def batter_generator():
-    name = fake.name_male()
+    first_name = fake.first_name_male()
+    last_name = fake.last_name()
+    name = first_name + " " + last_name
     random_contact = random.randint(50, 99)
     random_power = random.randint(50, 99)
     random_speed = random.randint(50, 99)
@@ -13,7 +15,9 @@ def batter_generator():
     return new_batter
 
 def pitcher_generator():
-    name = fake.name_male()
+    first_name = fake.first_name_male()
+    last_name = fake.last_name()
+    name = first_name + " " + last_name
     random_velocity = random.randint(50, 99)
     random_control = random.randint(50, 99)
     random_stuff = random.randint(50, 99)

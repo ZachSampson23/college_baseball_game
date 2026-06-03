@@ -17,8 +17,12 @@ def print_standings(season):
     #takes the teams and sorts the objects by their wins in descending order
     print("Standings")
     for x in range(len(sorted_teams)):
-        win_percentage = f"{sorted_teams[x].wins / (sorted_teams[x].wins + sorted_teams[x].losses):.3f}"
-        print(str(x + 1) + ". " + sorted_teams[x].name + "   " + str(sorted_teams[x].wins) + "-" + str(sorted_teams[x].losses) + "   " + str(win_percentage))
+        win_percentage = f"{sorted_teams[x].wins / (sorted_teams[x].wins + sorted_teams[x].losses):.3f}".lstrip("0")
+        run_differential = sorted_teams[x].stats.get_stats()["run_diff"]
+        if run_differential > 0:
+            run_differential = "+" + str(run_differential)
+        print(str(x + 1) + ". " + sorted_teams[x].name + " | " + str(sorted_teams[x].wins) + "-" + 
+              str(sorted_teams[x].losses) + " | " + str(win_percentage) + " | " + str(run_differential))
 
 def batter_leaderboard_derived_stats(season, stat, title):
     """Takes the season, what stat to sort by and the title of the leaderboard. This will print the top 10 in the stat that is chosen"""
@@ -65,3 +69,24 @@ def pitcher_leaderboard_derived_stats(season, stat, title):
     print(title)
     for i in range(3):
         print(str(i + 1) + ". " + sorted_players[i].name + "   " + f"{sorted_players[i].stats.get_stats()[stat]:.2f}")
+
+def team_leaderboards(derived_stat, stat, title, season):
+    if derived_stat:
+        sorted_teams = sorted(season.teams, key=lambda team: team.stats.get_stats()[stat], reverse=True)
+    else:
+        if stat in ["runs_allowed", "errors"]:
+            sorted_teams = sorted(season.teams, key=lambda team: getattr(team.stats, stat), reverse=False)
+        else:
+            sorted_teams = sorted(season.teams, key=lambda team: getattr(team.stats, stat), reverse=True)
+    print(title)
+    for i in range(len(season.teams)):
+        if stat == "run_diff":
+            if sorted_teams[i].stats.get_stats()[stat] > 0:
+                run_diff = sorted_teams[i].stats.get_stats()[stat]
+                print(str(i + 1) + ". " + sorted_teams[i].name + "   +" + str(run_diff))
+            else:
+                print(str(i + 1) + ". " + sorted_teams[i].name + "   " + str(sorted_teams[i].stats.get_stats()[stat]))
+        elif derived_stat:
+            print(str(i + 1) + ". " + sorted_teams[i].name + "   " + str(sorted_teams[i].stats.get_stats()[stat]))
+        else:
+            print(str(i + 1) + ". " + sorted_teams[i].name + "   " + str(getattr(sorted_teams[i].stats, stat)))

@@ -316,6 +316,18 @@ def simulate_game(home, away):
         who_won_team = away
         who_lost_team = home
     who_won_string = who_won_team.name
+    #Updating Team Stats:
+    home.stats.runs_scored += home_score
+    home.stats.runs_allowed += away_score
+    home.stats.hits += home_hits
+    home.stats.home_runs += home_hrs
+    home.stats.errors += home_errors
+
+    away.stats.runs_scored += away_score
+    away.stats.runs_allowed += home_score
+    away.stats.hits += away_hits
+    away.stats.home_runs += away_hrs
+    away.stats.errors += away_errors
     #print("The game is over in " + str(innings) + " innings with a score of " + str(home_score) + "-" + str(away_score) + " favoring the " + who_won_string + ".")
     #print("Home Team: Runs: " + str(home_score) + " Hits: " + str(home_hits) + " Errors: " + str(home_errors))
     #print("Away Team: Runs: "+ str(away_score) + " Hits: " + str(away_hits) + " Errors: " + str(away_errors))

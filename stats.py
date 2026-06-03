@@ -95,3 +95,15 @@ class PitcherStat:
             k_per_nine = self.strikeouts / innings_for_stats * 9 
             bb_per_nine = self.walks_allowed / innings_for_stats * 9 
             return {"ip": innings_pitched, "era": era, "whip": whip, "K/9": k_per_nine, "BB/9": bb_per_nine}
+        
+class TeamStat:
+    def __init__(self):
+        self.runs_scored = 0
+        self.runs_allowed = 0
+        self.hits = 0
+        self.home_runs = 0
+        self.errors = 0
+    
+    def get_stats(self):
+        run_differential = self.runs_scored - self.runs_allowed
+        return {"run_diff": run_differential}

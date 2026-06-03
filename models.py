@@ -1,4 +1,4 @@
-from stats import BatterStat, PitcherStat
+from stats import BatterStat, PitcherStat, TeamStat
 
 class Batter:
     def __init__(self, name, contact, power, speed, fielding):
@@ -28,6 +28,7 @@ class Team:
         self.pitcher = pitcher
         self.wins = 0
         self.losses = 0
+        self.stats = TeamStat()
 
 class Season:
     def __init__(self, teams):
@@ -43,5 +44,6 @@ class Season:
                 if i <= j:
                     continue
                 matchup = [self.teams[i], self.teams[j]]
-                schedule.append(matchup)
+                for k in range(3):
+                    schedule.append(matchup)
         return schedule
