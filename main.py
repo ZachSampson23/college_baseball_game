@@ -17,6 +17,4 @@ teams = [team1, team2, team3, team4, team5, team6, team7, team8]
 
 test_season = simulate_season(teams)
 print_standings(test_season)
-team_leaderboards(False, "runs_scored", "Runs Scored Leaderboard", test_season)
-team_leaderboards(False, "runs_allowed", "Runs Allowed Leaderboard", test_season)
-team_leaderboards(True, "run_diff", "Run Differential Leaderboard", test_season)
+simulate_acc_tournament(test_season)

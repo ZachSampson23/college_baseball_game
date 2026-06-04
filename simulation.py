@@ -343,3 +343,53 @@ def simulate_season(teams):
         losing_team.losses += 1
         season.season_games_played += 1
     return season
+
+def simulate_series(matchup):
+    team0_wins = 0
+    team1_wins = 0
+    while team0_wins < 2 and team1_wins < 2:
+        who_won = simulate_game(matchup[0], matchup[1])["Winner"]
+        if who_won.name == matchup[0].name:
+            team0_wins += 1
+        else:
+            team1_wins += 1
+    if team0_wins == 2:
+        winner = matchup[0]
+        loser = matchup[1]
+        loser_wins = team1_wins
+    elif team1_wins == 2:
+        winner = matchup[1]
+        loser = matchup[0]
+        loser_wins = team0_wins
+    winning_string = "The " + winner.name + " defeat the " + loser.name + " " + str(2) + "-" + str(loser_wins)
+    return {"winner": winner, "string": winning_string}
+
+def simulate_round(matchups):
+    winner_list = []
+    string_list = []
+    for x in range(len(matchups)):
+        series = simulate_series(matchups[x])
+        winner = series["winner"]
+        winning_string = series["string"]
+        winner_list.append(winner)
+        string_list.append(winning_string)
+    return {"winners": winner_list, "strings": string_list}
+
+def simulate_acc_tournament(season):
+    sorted_teams = sorted(season.teams, key=lambda team: team.wins, reverse=True)
+    matchup0 = [sorted_teams[0], sorted_teams[3]]
+    matchup1 = [sorted_teams[1], sorted_teams[2]]
+    semi_matchups = [matchup0, matchup1]
+    print("ACC Semifinals Results:")
+    round_result = simulate_round(semi_matchups)
+    round_strings = round_result["strings"]
+    round_winners = round_result["winners"]
+    print(round_strings[0])
+    print(round_strings[1])
+    print("ACC Championship Result:")
+    championship_matchup = [round_winners[0], round_winners[1]]
+    championship_result = simulate_series(championship_matchup)
+    print(championship_result["string"])
+    champion = championship_result["winner"]
+    return {"champion": champion, "championship_results": championship_result, "semifinal_results": round_result}
+    
