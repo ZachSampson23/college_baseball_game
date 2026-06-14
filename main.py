@@ -15,6 +15,13 @@ team7 = team_generator("Virginia Cavaliers")
 team8 = team_generator("Virginia Tech Hokies")
 teams = [team1, team2, team3, team4, team5, team6, team7, team8]
 
-test_season = simulate_season(teams)
-print_standings(test_season)
-simulate_acc_tournament(test_season)
+test_dynasty = Dynasty(teams)
+simulate_dynasty_year(test_dynasty)
+simulate_dynasty_year(test_dynasty)
+simulate_dynasty_year(test_dynasty)
+print(test_dynasty.current_year)
+print(len(test_dynasty.season_history))
+for i in range(len(test_dynasty.champion_history)):
+    team = test_dynasty.champion_history[i][0]
+    year = test_dynasty.champion_history[i][1]
+    print(str(year) + " - " + team.name)

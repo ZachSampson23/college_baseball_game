@@ -47,3 +47,10 @@ class Season:
                 for k in range(3):
                     schedule.append(matchup)
         return schedule
+    
+class Dynasty:
+    def __init__(self, teams):
+        self.current_year = 2026
+        self.teams = teams
+        self.champion_history = []
+        self.season_history = []

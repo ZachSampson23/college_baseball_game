@@ -1,4 +1,4 @@
-from models import Batter, Pitcher, Season, Team, Result
+from models import Season, Result, Dynasty
 import random
 
 def at_bat(pitcher, batter):
@@ -392,4 +392,11 @@ def simulate_acc_tournament(season):
     print(championship_result["string"])
     champion = championship_result["winner"]
     return {"champion": champion, "championship_results": championship_result, "semifinal_results": round_result}
-    
+
+def simulate_dynasty_year(dynasty):
+    dynasty_season = simulate_season(dynasty.teams)
+    acc_tourney = simulate_acc_tournament(dynasty_season)
+    dynasty.season_history.append(dynasty_season)
+    champion_history = [acc_tourney["champion"], dynasty.current_year]
+    dynasty.champion_history.append(champion_history)
+    dynasty.current_year += 1
