@@ -1,21 +1,35 @@
 from stats import BatterStat, PitcherStat, TeamStat
 
 class Batter:
-    def __init__(self, name, contact, power, speed, fielding):
+    def __init__(self, name, contact, power, speed, fielding, stars, potential, development_type):
         self.name = name
         self.contact = contact
         self.power = power
         self.speed = speed
         self.fielding = fielding
+        self.stars = stars
+        self.potential = potential
+        self.development_type = development_type
         self.stats = BatterStat()
     
+    def get_overall(self):
+        overall = self.contact + self.power + self.speed + self.fielding
+        return int(overall / 4)
+    
 class Pitcher:
-    def __init__(self, name, velocity, control, stuff):
+    def __init__(self, name, velocity, control, stuff, stars, potential, development_type):
         self.name = name
         self.velocity = velocity
         self.control = control
         self.stuff = stuff
+        self.stars = stars
+        self.potential = potential
+        self.development_type = development_type
         self.stats = PitcherStat()
+
+    def get_overall(self):
+        overall = self.velocity + self.control + self.stuff
+        return int(overall / 3)
 
 class Result:
     def __init__(self, result):

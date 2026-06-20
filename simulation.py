@@ -1,4 +1,5 @@
 from models import Season, Result, Dynasty
+from stats import TeamStat, BatterStat, PitcherStat
 import random
 
 def at_bat(pitcher, batter):
@@ -400,3 +401,14 @@ def simulate_dynasty_year(dynasty):
     champion_history = [acc_tourney["champion"], dynasty.current_year]
     dynasty.champion_history.append(champion_history)
     dynasty.current_year += 1
+    reset_stats_after_season(dynasty.teams)
+
+def reset_stats_after_season(teams):
+    for i in range(len(teams)):
+        teams[i].stats = TeamStat()
+        teams[i].wins = 0
+        teams[i].losses = 0
+        for k in range(len(teams[i].lineup)):
+            player = teams[i].lineup[k]
+            player.stats = BatterStat()
+        teams[i].pitcher.stats = PitcherStat()
