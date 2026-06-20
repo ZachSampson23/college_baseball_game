@@ -403,6 +403,59 @@ def simulate_dynasty_year(dynasty):
     dynasty.current_year += 1
     reset_stats_after_season(dynasty.teams)
 
+def progress_batter(batter):
+    current_ovr = batter.get_overall()
+    pot_gap = batter.potential - current_ovr
+    if pot_gap >= 25:
+        ovr_increase = random.randint(12, 20)
+    elif pot_gap >= 15:
+        ovr_increase = random.randint(10, 14)
+    elif pot_gap >= 8:
+        ovr_increase = random.randint(7, 10)
+    elif pot_gap >= 1:
+        ovr_increase = random.randint(3, 6)
+    elif pot_gap <= 0:
+        ovr_increase = 0
+    
+    if batter.development_type == "gem":
+        ovr_increase += random.randint(6, 12)
+    elif batter.development_type == "bust":
+        ovr_increase -= random.randint(2, 5)
+    if current_ovr >= 93:
+        ovr_increase = random.randint(1, 3)
+    
+    if ovr_increase < 0:
+        for i in range(abs(ovr_increase)):
+            attribute_downgrade = random.randint(1, 4)
+            if attribute_downgrade == 1:
+                batter.contact -= 1
+            elif attribute_downgrade == 2:
+                batter.power -= 1
+            elif attribute_downgrade == 3:
+                batter.speed -= 1
+            else:
+                batter.fielding -= 1
+    else:
+        for i in range(ovr_increase):
+            attribute_upgrade = random.randint(1, 4)
+            if attribute_upgrade == 1:
+                batter.contact += 1
+                if batter.contact > 99:
+                    batter.contact = 99
+            elif attribute_upgrade == 2:
+                batter.power += 1
+                if batter.power > 99:
+                    batter.power = 99
+            elif attribute_upgrade == 3:
+                batter.speed += 1
+                if batter.speed > 99:
+                    batter.speed = 99
+            else:
+                batter.fielding += 1
+                if batter.fielding > 99:
+                    batter.fielding = 99
+    
+
 def reset_stats_after_season(teams):
     for i in range(len(teams)):
         teams[i].stats = TeamStat()
