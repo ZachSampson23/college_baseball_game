@@ -5,12 +5,12 @@ from simulation import*
 from leaderboard import*
 from generation import*
 
-batter = batter_generator()
-print("Name: " + batter.name + " Potential: " + str(batter.potential) + " Development: " + batter.development_type)
-print("Year 1: " + str(batter.get_overall()))
-progress_batter(batter)
-print("Year 2: " + str(batter.get_overall()))
-progress_batter(batter)
-print("Year 3: " + str(batter.get_overall()))
-progress_batter(batter)
-print("Year 4: " + str(batter.get_overall()))
+pitcher = pitcher_generator()
+print("Name: " + pitcher.name + " Potential: " + str(pitcher.potential) + " Development: " + pitcher.development_type)
+print("Year 1: " + str(pitcher.get_overall()))
+progress_pitcher(pitcher)
+print("Year 2: " + str(pitcher.get_overall()))
+progress_pitcher(pitcher)
+print("Year 3: " + str(pitcher.get_overall()))
+progress_pitcher(pitcher)
+print("Year 4: " + str(pitcher.get_overall()))

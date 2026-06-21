@@ -415,7 +415,12 @@ def progress_batter(batter):
     elif pot_gap >= 1:
         ovr_increase = random.randint(3, 6)
     elif pot_gap <= 0:
-        ovr_increase = 0
+        if batter.development_type == "normal":
+            ovr_increase += random.randint(0, 4)
+        elif batter.development_type == "gem":
+            ovr_increase += random.randint(4, 8)
+        else:
+            ovr_increase -= random.randint(-2, 0)
     
     if batter.development_type == "gem":
         ovr_increase += random.randint(6, 12)
@@ -454,7 +459,58 @@ def progress_batter(batter):
                 batter.fielding += 1
                 if batter.fielding > 99:
                     batter.fielding = 99
+
+def progress_pitcher(pitcher):
+    current_ovr = pitcher.get_overall()
+    pot_gap = pitcher.potential - current_ovr
+    if pot_gap >= 25:
+        ovr_increase = random.randint(10, 16)
+    elif pot_gap >= 15:
+        ovr_increase = random.randint(6, 10)
+    elif pot_gap >= 8:
+        ovr_increase = random.randint(4, 8)
+    elif pot_gap >= 1:
+        ovr_increase = random.randint(3, 6)
+    elif pot_gap <= 0:
+        if pitcher.development_type == "normal":
+            ovr_increase = random.randint(0, 4)
+        elif pitcher.development_type == "gem":
+            ovr_increase = random.randint(4, 8)
+        else:
+            ovr_increase = random.randint(-2, 0)
     
+    if pitcher.development_type == "gem":
+        ovr_increase += random.randint(6, 12)
+    elif pitcher.development_type == "bust":
+        ovr_increase -= random.randint(1, 4)
+    if current_ovr >= 93:
+        ovr_increase = random.randint(1, 3)
+    
+    if ovr_increase < 0:
+        for i in range(abs(ovr_increase)):
+            attribute_downgrade = random.randint(1, 3)
+            if attribute_downgrade == 1:
+                pitcher.velocity -= 1
+            elif attribute_downgrade == 2:
+                pitcher.control -= 1
+            else:
+                pitcher.stuff -= 1
+    else:
+        for i in range(ovr_increase):
+            attribute_upgrade = random.randint(1, 3)
+            if attribute_upgrade == 1:
+                pitcher.velocity += 1
+                if pitcher.velocity > 99:
+                    pitcher.velocity = 99
+            elif attribute_upgrade == 2:
+                pitcher.control += 1
+                if pitcher.control > 99:
+                    pitcher.control = 99
+            else:
+                pitcher.stuff += 1
+                if pitcher.stuff > 99:
+                    pitcher.stuff = 99
+
 
 def reset_stats_after_season(teams):
     for i in range(len(teams)):
