@@ -511,6 +511,18 @@ def progress_pitcher(pitcher):
                 if pitcher.stuff > 99:
                     pitcher.stuff = 99
 
+def progress_team(team):
+    lineup = team.lineup
+    pitcher = team.pitcher
+    for x in range(len(lineup)):
+        progress_batter(lineup[x])
+    progress_pitcher(pitcher)
+
+
+def progress_all_players(teams):
+    for x in range(len(teams)):
+        progress_team(teams[x])
+
 
 def reset_stats_after_season(teams):
     for i in range(len(teams)):
