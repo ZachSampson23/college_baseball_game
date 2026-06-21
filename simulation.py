@@ -381,16 +381,16 @@ def simulate_acc_tournament(season):
     matchup0 = [sorted_teams[0], sorted_teams[3]]
     matchup1 = [sorted_teams[1], sorted_teams[2]]
     semi_matchups = [matchup0, matchup1]
-    print("ACC Semifinals Results:")
+    #print("ACC Semifinals Results:")
     round_result = simulate_round(semi_matchups)
     round_strings = round_result["strings"]
     round_winners = round_result["winners"]
-    print(round_strings[0])
-    print(round_strings[1])
-    print("ACC Championship Result:")
+    #print(round_strings[0])
+    #print(round_strings[1])
+    #print("ACC Championship Result:")
     championship_matchup = [round_winners[0], round_winners[1]]
     championship_result = simulate_series(championship_matchup)
-    print(championship_result["string"])
+    #print(championship_result["string"])
     champion = championship_result["winner"]
     return {"champion": champion, "championship_results": championship_result, "semifinal_results": round_result}
 
@@ -400,8 +400,9 @@ def simulate_dynasty_year(dynasty):
     dynasty.season_history.append(dynasty_season)
     champion_history = [acc_tourney["champion"], dynasty.current_year]
     dynasty.champion_history.append(champion_history)
-    dynasty.current_year += 1
+    progress_all_players(dynasty.teams)
     reset_stats_after_season(dynasty.teams)
+    dynasty.current_year += 1
 
 def progress_batter(batter):
     current_ovr = batter.get_overall()
@@ -416,11 +417,11 @@ def progress_batter(batter):
         ovr_increase = random.randint(3, 6)
     elif pot_gap <= 0:
         if batter.development_type == "normal":
-            ovr_increase += random.randint(0, 4)
+            ovr_increase = random.randint(0, 4)
         elif batter.development_type == "gem":
-            ovr_increase += random.randint(4, 8)
+            ovr_increase = random.randint(4, 8)
         else:
-            ovr_increase -= random.randint(-2, 0)
+            ovr_increase = random.randint(-2, 0)
     
     if batter.development_type == "gem":
         ovr_increase += random.randint(6, 12)

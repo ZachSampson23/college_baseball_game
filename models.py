@@ -43,6 +43,13 @@ class Team:
         self.wins = 0
         self.losses = 0
         self.stats = TeamStat()
+    
+    def get_overall(self):
+        total_overall = 0
+        for x in range(len(self.lineup)):
+            total_overall += self.lineup[x].get_overall()
+        total_overall += self.pitcher.get_overall()
+        return int(total_overall / 10)
 
 class Season:
     def __init__(self, teams):
