@@ -106,7 +106,7 @@ def batter_generator():
             development = "normal"
     
     
-    new_batter = Batter(name, contact, power, speed, fielding, stars, potential, development)
+    new_batter = Batter(name, contact, power, speed, fielding, stars, potential, development, "Freshman")
     return new_batter
 
 def pitcher_generator():
@@ -207,7 +207,7 @@ def pitcher_generator():
             development = "normal"
 
 
-    new_pitcher = Pitcher(name, velocity, control, stuff, stars, potential, development)
+    new_pitcher = Pitcher(name, velocity, control, stuff, stars, potential, development, "Freshman")
     return new_pitcher
 
 def team_generator(team_name):

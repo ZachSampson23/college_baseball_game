@@ -15,14 +15,22 @@ team7 = team_generator("Louisville Cardinals")
 team8 = team_generator("Miami Hurricanes")
 teams = [team1, team2, team3, team4, team5, team6, team7, team8]
 
-dynasty = Dynasty(teams)
-for x in range(len(teams)):
-    print(teams[x].name + " | " + str(teams[x].get_overall()))
-simulate_dynasty_year(dynasty)
-simulate_dynasty_year(dynasty)
-simulate_dynasty_year(dynasty)
-simulate_dynasty_year(dynasty)
-for x in range(4):
-    print(str(dynasty.champion_history[x][1]) + " " + dynasty.champion_history[x][0].name)
-for x in range(len(teams)):
-    print(teams[x].name + " | " + str(teams[x].get_overall()))
+player1 = Batter(34, 44, 5, 24, 22, 4, 55, "normal", "Freshman")
+player2 = Batter(34, 44, 5, 24, 22, 4, 55, "normal", "Sophomore")
+player3 = Batter(34, 44, 5, 24, 22, 4, 55, "normal", "Junior")
+player4 = Batter(34, 44, 5, 24, 22, 4, 55, "normal", "Senior")
+
+print("Player1: " + player1.year)
+print("Player2: " + player2.year)
+print("Player3: " + player3.year)
+print("Player4: " + player4.year)
+
+advance_player_year(player1)
+advance_player_year(player2)
+advance_player_year(player3)
+advance_player_year(player4)
+
+print("Player1: " + player1.year)
+print("Player2: " + player2.year)
+print("Player3: " + player3.year)
+print("Player4: " + player4.year)

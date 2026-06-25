@@ -525,6 +525,28 @@ def progress_all_players(teams):
         progress_team(teams[x])
 
 
+def advance_player_year(player):
+    if player.year == "Freshman":
+        player.year = "Sophomore"
+    elif player.year == "Sophomore":
+        player.year = "Junior"
+    elif player.year == "Junior":
+        player.year = "Senior"
+    elif player.year == "Senior":
+        player.year = "Graduated"
+
+
+def advance_team_year(team):
+    for x in range(len(team.lineup)):
+        advance_player_year(team.lineup[x])
+    advance_player_year(team.pitcher)
+
+
+def advance_all_player_year(teams):
+    for x in range(len(teams)):
+        advance_team_year(teams[x])
+
+
 def reset_stats_after_season(teams):
     for i in range(len(teams)):
         teams[i].stats = TeamStat()
