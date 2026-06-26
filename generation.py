@@ -3,7 +3,7 @@ from models import Batter, Pitcher, Team
 from faker import Faker
 
 fake = Faker()
-def batter_generator():
+def batter_generator(position):
     first_name = fake.first_name_male()
     last_name = fake.last_name()
     name = first_name + " " + last_name
@@ -25,13 +25,13 @@ def batter_generator():
         gem_prop = random.random()
         if gem_prop <= five_star_gem_prop:
             potential = random.randint(95, 99)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= five_star_bust_prop:
             potential = random.randint(72, 84)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(90, 99)
-            development = "normal"
+            development_type = "normal"
     elif star_prop <= four_star_prop:
         stars = 4
         contact = random.randint(70, 83)
@@ -43,13 +43,13 @@ def batter_generator():
         gem_prop = random.random()
         if gem_prop <= four_star_gem_prop:
             potential = random.randint(92, 99)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= four_star_bust_prop:
             potential = random.randint(68, 78)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(80, 92)
-            development = "normal"
+            development_type = "normal"
     elif star_prop <= three_star_prop:
         stars = 3
         contact = random.randint(60, 73)
@@ -61,13 +61,13 @@ def batter_generator():
         gem_prop = random.random()
         if gem_prop <= three_star_gem_prop:
             potential = random.randint(90, 99)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= three_star_bust_prop:
             potential = random.randint(62, 72)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(70, 84)
-            development = "normal"
+            development_type = "normal"
     elif star_prop <= two_star_prop:
         stars = 2
         contact = random.randint(50, 63)
@@ -79,13 +79,13 @@ def batter_generator():
         gem_prop = random.random()
         if gem_prop <= two_star_gem_prop:
             potential = random.randint(85, 95)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= two_star_bust_prop:
             potential = random.randint(55, 65)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(60, 76)
-            development = "normal"
+            development_type = "normal"
     else:
         stars = 1
         contact = random.randint(40, 53)
@@ -97,16 +97,16 @@ def batter_generator():
         gem_prop = random.random()
         if gem_prop <= one_star_gem_prop:
             potential = random.randint(80, 90)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= one_star_bust_prop:
             potential = random.randint(45, 65)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(50, 68)
-            development = "normal"
+            development_type = "normal"
     
     
-    new_batter = Batter(name, contact, power, speed, fielding, stars, potential, development, "Freshman")
+    new_batter = Batter(name, contact, power, speed, fielding, stars, potential, development_type, "Freshman", position)
     return new_batter
 
 def pitcher_generator():
@@ -130,13 +130,13 @@ def pitcher_generator():
         gem_prop = random.random()
         if gem_prop <= five_star_gem_prop:
             potential = random.randint(95, 99)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= five_star_bust_prop:
             potential = random.randint(72, 84)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(90, 99)
-            development = "normal"
+            development_type = "normal"
     elif star_prop <= four_star_prop:
         stars = 4
         velocity = random.randint(70, 83)
@@ -147,13 +147,13 @@ def pitcher_generator():
         gem_prop = random.random()
         if gem_prop <= four_star_gem_prop:
             potential = random.randint(92, 99)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= four_star_bust_prop:
             potential = random.randint(68, 78)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(80, 92)
-            development = "normal"
+            development_type = "normal"
     elif star_prop <= three_star_prop:
         stars = 3
         velocity = random.randint(60, 73)
@@ -164,13 +164,13 @@ def pitcher_generator():
         gem_prop = random.random()
         if gem_prop <= three_star_gem_prop:
             potential = random.randint(90, 99)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= three_star_bust_prop:
             potential = random.randint(62, 72)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(70, 84)
-            development = "normal"
+            development_type = "normal"
     elif star_prop <= two_star_prop:
         stars = 2
         velocity = random.randint(50, 63)
@@ -181,13 +181,13 @@ def pitcher_generator():
         gem_prop = random.random()
         if gem_prop <= two_star_gem_prop:
             potential = random.randint(85, 95)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= two_star_bust_prop:
             potential = random.randint(55, 65)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(60, 76)
-            development = "normal"
+            development_type = "normal"
     else:
         stars = 1
         velocity = random.randint(40, 53)
@@ -198,22 +198,38 @@ def pitcher_generator():
         gem_prop = random.random()
         if gem_prop <= one_star_gem_prop:
             potential = random.randint(80, 90)
-            development = "gem"
+            development_type = "gem"
         elif gem_prop <= one_star_bust_prop:
             potential = random.randint(45, 65)
-            development = "bust"
+            development_type = "bust"
         else:
             potential = random.randint(50, 68)
-            development = "normal"
+            development_type = "normal"
 
 
-    new_pitcher = Pitcher(name, velocity, control, stuff, stars, potential, development, "Freshman")
+    new_pitcher = Pitcher(name, velocity, control, stuff, stars, potential, development_type, "Freshman")
     return new_pitcher
 
 def team_generator(team_name):
     lineup = []
-    for x in range(9):
-        lineup.append(batter_generator())
+    bench = []
+    lineup.append(batter_generator("1B"))
+    lineup.append(batter_generator("2B"))
+    lineup.append(batter_generator("SS"))
+    lineup.append(batter_generator("3B"))
+    lineup.append(batter_generator("C"))
+    lineup.append(batter_generator("RF"))
+    lineup.append(batter_generator("CF"))
+    lineup.append(batter_generator("LF"))
+    lineup.append(batter_generator("DH"))
+
+    for x in range(5):
+        bench.append(batter_generator(position_generator()))
+
     pitcher = pitcher_generator()
-    new_team = Team(team_name, lineup, pitcher)
+    new_team = Team(team_name, lineup, pitcher, bench)
     return new_team
+
+def position_generator():
+    positions = ["1B", "2B", "3B", "SS", "C", "LF", "CF", "RF"]
+    return random.choice(positions)
