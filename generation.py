@@ -210,6 +210,48 @@ def pitcher_generator():
     new_pitcher = Pitcher(name, velocity, control, stuff, stars, potential, development_type, "Freshman")
     return new_pitcher
 
+def walk_on_generator(position):
+    first_name = fake.first_name_male()
+    last_name = fake.last_name()
+    name = first_name + " " + last_name
+    if position == "Pitcher":
+        velocity = random.randint(40, 53)
+        control = random.randint(40, 53)
+        stuff = random.randint(40, 53)
+        one_star_gem_prop = 0.01
+        one_star_bust_prop = one_star_gem_prop + 0.01
+        gem_prop = random.random()
+        if gem_prop <= one_star_gem_prop:
+            potential = random.randint(80, 90)
+            development_type = "gem"
+        elif gem_prop <= one_star_bust_prop:
+            potential = random.randint(45, 65)
+            development_type = "bust"
+        else:
+            potential = random.randint(50, 68)
+            development_type = "normal"
+        return Pitcher(name, velocity, control, stuff, 1, potential, development_type, "Freshman")
+    else:
+        stars = 1
+        contact = random.randint(40, 53)
+        power = random.randint(40, 53)
+        speed = random.randint(40, 53)
+        fielding = random.randint(40, 53)
+        one_star_gem_prop = 0.01
+        one_star_bust_prop = one_star_gem_prop + 0.01
+        gem_prop = random.random()
+        if gem_prop <= one_star_gem_prop:
+            potential = random.randint(80, 90)
+            development_type = "gem"
+        elif gem_prop <= one_star_bust_prop:
+            potential = random.randint(45, 65)
+            development_type = "bust"
+        else:
+            potential = random.randint(50, 68)
+            development_type = "normal"
+        second_pos = second_pos_gen(position)
+        return Batter(name, contact, power, speed, fielding, stars, potential, development_type, "Freshman", position, second_pos)
+
 def team_generator(team_name):
     lineup = []
     bench = []

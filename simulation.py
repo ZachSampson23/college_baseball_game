@@ -570,6 +570,45 @@ def add_recruits_to_team(team):
         team.bench.append(recruiting_class[i])
 
 
+def rebuild_lineup(team):
+    full_roster = team.lineup + team.bench
+    positions = ["1B", "2B", "3B", "SS", "C", "LF", "CF", "RF"]
+    new_lineup = []
+    for x in positions:
+        best_player = None
+        for y in full_roster:
+            if y.position == x:
+                if best_player == None:
+                    best_player = y
+                else:
+                    if best_player.get_overall() < y.get_overall():
+                        best_player = y
+        if best_player == None:
+            for y in full_roster:
+                if y.second_pos == x:
+                    if best_player == None:
+                        best_player = y
+                    else:
+                        if best_player.get_overall() < y.get_overall():
+                            best_player = y
+        if best_player == None:
+            best_player = generation.walk_on_generator(x)
+            full_roster.append(best_player)
+        full_roster.remove(best_player)
+        new_lineup.append(best_player)
+    best_hitter = None
+    best_hitter_stat = 0
+    for x in full_roster:
+        hitting_stat = x.contact + x.power
+        if hitting_stat > best_hitter_stat:
+            best_hitter = x
+            best_hitter_stat = hitting_stat
+    new_lineup.append(best_hitter)
+    full_roster.remove(best_hitter)
+    team.lineup = new_lineup
+    team.bench = full_roster
+
+
 def reset_stats_after_season(teams):
     for i in range(len(teams)):
         teams[i].stats = TeamStat()
@@ -579,3 +618,9 @@ def reset_stats_after_season(teams):
             player = teams[i].lineup[k]
             player.stats = BatterStat()
         teams[i].pitcher.stats = PitcherStat()
+
+def advance_team_offseason(team):
+    advance_team_year(team)
+    remove_graduates(team)
+    add_recruits_to_team(team)
+    rebuild_lineup(team)
