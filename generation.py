@@ -3,7 +3,7 @@ from models import Batter, Pitcher, Team
 from faker import Faker
 
 fake = Faker()
-def batter_generator(position):
+def batter_generator(position, second_pos):
     first_name = fake.first_name_male()
     last_name = fake.last_name()
     name = first_name + " " + last_name
@@ -106,7 +106,7 @@ def batter_generator(position):
             development_type = "normal"
     
     
-    new_batter = Batter(name, contact, power, speed, fielding, stars, potential, development_type, "Freshman", position)
+    new_batter = Batter(name, contact, power, speed, fielding, stars, potential, development_type, "Freshman", position, second_pos)
     return new_batter
 
 def pitcher_generator():
@@ -213,18 +213,20 @@ def pitcher_generator():
 def team_generator(team_name):
     lineup = []
     bench = []
-    lineup.append(batter_generator("1B"))
-    lineup.append(batter_generator("2B"))
-    lineup.append(batter_generator("SS"))
-    lineup.append(batter_generator("3B"))
-    lineup.append(batter_generator("C"))
-    lineup.append(batter_generator("RF"))
-    lineup.append(batter_generator("CF"))
-    lineup.append(batter_generator("LF"))
-    lineup.append(batter_generator("DH"))
+    lineup.append(batter_generator("1B", second_pos_gen("1B")))
+    lineup.append(batter_generator("2B", second_pos_gen("2B")))
+    lineup.append(batter_generator("SS", second_pos_gen("SS")))
+    lineup.append(batter_generator("3B", second_pos_gen("3B")))
+    lineup.append(batter_generator("C", second_pos_gen("C")))
+    lineup.append(batter_generator("RF", second_pos_gen("RF")))
+    lineup.append(batter_generator("CF", second_pos_gen("CF")))
+    lineup.append(batter_generator("LF", second_pos_gen("LF")))
+    dh_pos = position_generator()
+    lineup.append(batter_generator(dh_pos, second_pos_gen(dh_pos)))
 
     for x in range(5):
-        bench.append(batter_generator(position_generator()))
+        first_position = position_generator()
+        bench.append(batter_generator(first_position, second_pos_gen(first_position)))
 
     pitcher = pitcher_generator()
     new_team = Team(team_name, lineup, pitcher, bench)
@@ -233,3 +235,37 @@ def team_generator(team_name):
 def position_generator():
     positions = ["1B", "2B", "3B", "SS", "C", "LF", "CF", "RF"]
     return random.choice(positions)
+
+def second_pos_gen(first_position):
+    if first_position == "C":
+        choices = [None, "1B"]
+        return random.choice(choices)
+    elif first_position == "1B":
+        choices = ["3B", "LF"]
+        return random.choice(choices)
+    elif first_position == "2B":
+        choices = ["SS", "3B", "CF"]
+        return random.choice(choices)
+    elif first_position == "SS":
+        choices = ["2B", "3B"]
+        return random.choice(choices)
+    elif first_position == "3B":
+        choices = ["1B", "SS"]
+        return random.choice(choices)
+    elif first_position == "LF":
+        choices = ["RF", "CF", "1B"]
+        return random.choice(choices)
+    elif first_position == "CF":
+        choices = ["RF", "LF"]
+        return random.choice(choices)
+    elif first_position == "RF":
+        choices = ["CF", "LF", "1B"]
+        return random.choice(choices)
+
+def create_recruiting_class():
+    recruiting_class = []
+    for x in range(10):
+        first_position = position_generator()
+        batter = batter_generator(first_position, second_pos_gen(first_position))
+        recruiting_class.append(batter)
+    return recruiting_class

@@ -1,5 +1,6 @@
 from models import Season, Result, Dynasty
 from stats import TeamStat, BatterStat, PitcherStat
+import generation
 import random
 
 def at_bat(pitcher, batter):
@@ -539,12 +540,34 @@ def advance_player_year(player):
 def advance_team_year(team):
     for x in range(len(team.lineup)):
         advance_player_year(team.lineup[x])
+    for y in range(len(team.bench)):
+        advance_player_year(team.bench[y])
     advance_player_year(team.pitcher)
 
 
 def advance_all_player_year(teams):
     for x in range(len(teams)):
         advance_team_year(teams[x])
+
+
+def remove_graduates(team):
+    i = len(team.lineup) - 1
+    j = len(team.bench) - 1
+    while i >= 0:
+        if team.lineup[i].year == "Graduated":
+            team.lineup.remove(team.lineup[i])
+        i -= 1
+    
+    while j >= 0:
+        if team.bench[j].year == "Graduated":
+            team.bench.remove(team.bench[j])
+        j -= 1
+    
+
+def add_recruits_to_team(team):
+    recruiting_class = generation.create_recruiting_class()
+    for i in range(len(recruiting_class)):
+        team.bench.append(recruiting_class[i])
 
 
 def reset_stats_after_season(teams):
