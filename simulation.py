@@ -402,6 +402,8 @@ def simulate_dynasty_year(dynasty):
     champion_history = [acc_tourney["champion"], dynasty.current_year]
     dynasty.champion_history.append(champion_history)
     progress_all_players(dynasty.teams)
+    for x in dynasty.teams:
+        advance_team_offseason(x)
     reset_stats_after_season(dynasty.teams)
     dynasty.current_year += 1
 
@@ -515,9 +517,12 @@ def progress_pitcher(pitcher):
 
 def progress_team(team):
     lineup = team.lineup
+    bench = team.bench
     pitcher = team.pitcher
-    for x in range(len(lineup)):
-        progress_batter(lineup[x])
+    for x in lineup:
+        progress_batter(x)
+    for x in bench:
+        progress_batter(x)
     progress_pitcher(pitcher)
 
 
@@ -619,8 +624,17 @@ def reset_stats_after_season(teams):
             player.stats = BatterStat()
         teams[i].pitcher.stats = PitcherStat()
 
+def cut_extra_players(team):
+    full_roster = team.lineup + team.bench
+    if len(full_roster) > 35:
+        extra_players = len(full_roster) - 35
+        sorted_players = sorted(team.bench, key=lambda player: player.get_overall())
+        for x in range(extra_players):
+            team.bench.remove(sorted_players[x])
+
 def advance_team_offseason(team):
     advance_team_year(team)
     remove_graduates(team)
     add_recruits_to_team(team)
     rebuild_lineup(team)
+    cut_extra_players(team)
